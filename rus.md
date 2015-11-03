@@ -1,36 +1,29 @@
-*[ES6 In Depth][1] is a series on new features being added to the JavaScript
-programming language in the 6th Edition of the ECMAScript standard, ES6 for 
-short.*
+*[ES6 In Depth][1] - это серия новых фич, которые добавлены были в JavaScript в 6й версии редакции стандарта ECMAScript (кратко ES6)*
 
-Note: There is now a [Vietnamese ][2] translation of this post, created by
-Julia Duong of the[Coupofy team][3]. 
+Заметка: Здесь представлен перевод статьи с [Вьетнамского][2], созданный
+Джулией Дуонг из [команды Coupofy][3]. 
 
-What are ES6 symbols?
+Что такое символы в ES6?
 
-Symbols are not logos.
+Символы - это не картинки.
 
-They’re not little pictures you can use in your code.
+Это и не смайлы, которые вы можете использовать в вашем коде.
 
 `
 let 😻 = 😺 × 😍;  // SyntaxError
 `
 
-They’re not a literary device that stands for something else.
+Они также не являются литературным приемом для описания чего-либо.
 
-They’re definitely not the same thing as cymbals.
+И, безусловно, они не похоже на такие вещи как тарелки (прим. переводчика cymbals - англ. тарелка).
 
 ![][4]
 
-(It is not a good idea to use cymbals in programming. They have a tendency to
-crash.
-)
+Так что же *такое* символы?
 
-So, what *are* symbols?
+### Седьмой тип
 
-### The seventh type
-
-Since JavaScript was first standardized in 1997, there have been six types.
-Until ES6, every value in a JS program fell into one of these categories.
+С тех пор как JavaScript был впервые стандартизирован в 1997 году, в нем было 6 типов. До ES6 каждое значение в JS приложении попадало в одну из категорий:
 
 *   Undefined
 *   Null
@@ -39,35 +32,24 @@ Until ES6, every value in a JS program fell into one of these categories.
 *   String
 *   Object
 
-Each type is a set of values. The first five sets are all finite. There are, of
-course, only two Boolean values,`true` and `false`, and they aren’t making
-new ones. There are rather more Number and String values. The standard says 
-there are 18,437,736,874,454,810,627 different Numbers (including`NaN`, the
-Number whose name is short for “Not a Number”). That’s nothing compared to the 
-number of different possible Strings, which I think is (2144,115,188,075,855,
-872 − 1) ÷ 65,535 …though I may have miscounted.
+Каждый тип представляет собой набор значений. Первые пять наборов конечны. Конечно, существует только два Логических значения - `true` и `false` и они не порождают новых. С другой стороны, существует большое количество значений Числовых и Строковых типов. Стандарт говорит, что существует 18437736874454810627 - разных чисел (включая `NaN` - это Number, чье сокращение можно расшифровать как “Не число”). Это ничто по сравнению с числом различных возможных Строковых значений, которых я думаю (2^(144,115,188,075,855, 872) − 1) ÷ 65,535 ... хотя возможно, я просчитался.
 
-The set of Object values, however, is open-ended. Each object is a unique,
-precious snowflake. Every time you open a Web page, a rush of new objects is 
-created.
+Тем ни менее, набор значение Объкта неограничен. Каждый объект является уникальным. Каждый раз при открытии веб страницы создается множество новых обектов.
 
-ES6 symbols are values, but they’re not strings. They’re not objects. They
-’re something new: a seventh type of value.
+ES6 символы это значения, которые не являются ни строками ни объектами. Они что-то новое - седьмой тип значений.
 
-Let’s talk about a scenario where they might come in handy.
+Давайте поговорим о сценариях, где их использование могло бы нам пригодиться.
 
 ### One simple little boolean
 
-Sometimes it would be awfully convenient to stash some extra data on a
-JavaScript object that really belongs to someone else.
+Иногда бывает очень удобно спрятать некоторые дополнительные данные в JavaScript объект, который в действительности принадлежит кому-то другому.
+
+Например, предположим, что вы пишете библиотеку JS, которая использует CSS переходы сделать элементы DOM почтовый по экрану. Вы заметили, что любая попытка применить несколько переходов CSS в single `div` в то же время не работает. It causes некрасиво, прерывистым "прыгает". Вы думаете, что вы можете это исправить, но сначала нужно способ узнать, если данный элемент уже движется.
 
 For example, suppose you’re writing a JS library that uses CSS transitions to
-make DOM elements zip around on the screen. You’ve noticed that trying to apply 
-multiple CSS transitions to a single`div` at the same time doesn’t work. It
-causes ugly, discontinuous “jumps”. You think you can fix this, but first you 
-need a way to find out if a given element is already moving.
+make DOM elements zip around on the screen. You’ve noticed that trying to apply multiple CSS transitions to a single `div` at the same time doesn’t work.It causes ugly, discontinuous “jumps”. You think you can fix this, but first you need a way to find out if a given element is already moving.
 
-How can you solve this?
+Как можно решить эту проблему?
 
 One way is to use CSS APIs to ask the browser if the element is moving. But
 that sounds like overkill. Your library should*already know* the element is
@@ -81,7 +63,6 @@ already there.
 Hmm. A linear search will be slow if the array is big.
 
 What you really want to do is just set a flag on the element:
-
 
 `
 if (element.isMoving) {
@@ -112,7 +93,6 @@ that your code isn’t the only code using the DOM.
 Of course you can address the last three problems by choosing a string so
 tedious or so silly that nobody else would ever name anything that:
 
-
 `
 if (element.__$jorendorff_animation_library$PLEASE_DO_NOT_USE_THIS_PROPERTY$isMoving__) {
   smoothAnimations(element);
@@ -124,7 +104,6 @@ This seems not quite worth the eye strain.
 
 You could generate a practically unique name for the property using
 cryptography:
-
 
 `
 // get 1024 Unicode characters of gibberish
@@ -154,9 +133,7 @@ Symbols are values that programs can create and use as property keys without
 risking name collisions.
 
 `
-<pre>
 var mySymbol = Symbol();
-</pre>
 `
 
 Calling `Symbol()` creates a new symbol, a value that’s not equal to any
@@ -168,17 +145,14 @@ collide with any other property.
 
 
 `
-<pre>
 obj[mySymbol] = "ok!";  // guaranteed not to collide
 console.log(obj[mySymbol]);  // ok!
-</pre>
 `
 
 Here is how you could use a symbol in the situation discussed above:
 
 
 `
-<pre>
 // create a unique symbol
 var isMoving = Symbol("isMoving");
 
@@ -188,7 +162,6 @@ if (element[isMoving]) {
   smoothAnimations(element);
 }
 element[isMoving] = true;
-</pre>
 `
 
 A few notes about this code:
@@ -234,10 +207,8 @@ see later, the language itself is using of them for a wide range of purposes.
 ### But what are symbols, exactly?
 
 `
-<pre>
 > typeof Symbol()
 "symbol"
-</pre>
 `
 
 Symbols aren’t exactly like anything else.
@@ -261,7 +232,6 @@ with strings will result in a TypeError.
 
 
 ``
-<pre>
 > var sym = Symbol("<3");
 > "your symbol is " + sym
 // TypeError: can't convert symbol to string
