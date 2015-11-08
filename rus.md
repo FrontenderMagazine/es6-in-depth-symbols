@@ -58,12 +58,10 @@ ES6 символы — это значения, которые не являют
 
 Другой вариант — это просто установить флаг на элементе:
 
-`
-if (element.isMoving) {
-  smoothAnimations(element);
-}
-element.isMoving = true;
-`
+    if (element.isMoving) {
+      smoothAnimations(element);
+    }
+    element.isMoving = true;
 
 При таком подходе существует несколько потенциальных проблем. Все они связаны с тем, что код может работает не только с DOM'ом.
 
@@ -77,28 +75,24 @@ element.isMoving = true;
 
 Конечно, вы можете сказать, что последние три проблемы связаны с выбором строки, поэтому кажется глупо, что никто не будет так называть свойства:
 
-`
-if (element.__$jorendorff_animation_library$PLEASE_DO_NOT_USE_THIS_PROPERTY$isMoving__) {
-  smoothAnimations(element);
-}
-element.__$jorendorff_animation_library$PLEASE_DO_NOT_USE_THIS_PROPERTY$isMoving__ = true;
-`
+    if (element.__$jorendorff_animation_library$PLEASE_DO_NOT_USE_THIS_PROPERTY$isMoving__) {
+      smoothAnimations(element);
+    }
+    element.__$jorendorff_animation_library$PLEASE_DO_NOT_USE_THIS_PROPERTY$isMoving__ = true;
 
 Кажется, этот код не стоит того, чтобы на нем заострять внимание.
 
 Также существует возможность генерировать *практически уникальное* имя для свойства, используя криптографию:
 
-`
-// получить 1024 Юникод символа абракадабры
-var isMoving = SecureRandom.generateName();
+    // получить 1024 Юникод символа абракадабры
+    var isMoving = SecureRandom.generateName();
 
-...
+    ...
 
-if (element[isMoving]) {
-  smoothAnimations(element);
-}
-element[isMoving] = true;
-`
+    if (element[isMoving]) {
+      smoothAnimations(element);
+    }
+    element[isMoving] = true;
 
 Следующий синтаксис: `object[name]` позволяет использовать буквально любую строчку в качестве имени свойства. Это будет работать: коллизии практически невозможны, и код выглядит намного лучше.
 
@@ -110,33 +104,27 @@ element[isMoving] = true;
 
 Символы — это значения, которые программа может создать и использовать как названия свойств без риска повтора (коллизий).
 
-`
-var mySymbol = Symbol();
-`
+    var mySymbol = Symbol();
 
 Вызывая `Symbol()`, вы создаете новый символ, значения которого не равно любому другому объекту.
 
 Так же, как и строчку из цифр, вы можете использовать символ как имя свойства. 
 Оно уникально, и поэтому свойство с таким именем гарантированно не будет повторяться с любым другим свойством.
 
-`
-obj[mySymbol] = "ok!";  // гарантированно уникально
-console.log(obj[mySymbol]);  // ok!
-`
+    obj[mySymbol] = "ok!";  // гарантированно уникально
+    console.log(obj[mySymbol]);  // ok!
 
 Здесь видно, как можно использовать символ в ситуации, описанной выше:
 
-`
-// создать уникальный символ
-var isMoving = Symbol("isMoving");
+    // создать уникальный символ
+    var isMoving = Symbol("isMoving");
 
-...
+    ...
 
-if (element[isMoving]) {
-  smoothAnimations(element);
-}
-element[isMoving] = true;
-`
+    if (element[isMoving]) {
+      smoothAnimations(element);
+    }
+    element[isMoving] = true;
 
 Несколько замечаний по этому коду:
 
@@ -157,10 +145,8 @@ element[isMoving] = true;
 
 ## Итак, что такое символы?
 
-`
-> typeof Symbol()
-"symbol"
-`
+    > typeof Symbol()
+    "symbol"
 
 Символы не похожи ни на что другое.
 
@@ -175,14 +161,11 @@ element[isMoving] = true;
 
 Одно небольшое замечание по символам: в отличие от большинства типов в языке, символы не могут автоматически конвертироваться в строку. Попытка конкатенации символа со строкой приведет к TypeError.
 
-``
-> var sym = Symbol("<3");
-> "your symbol is " + sym
-// TypeError: невозможно конвертировать символ в строку
-> `your symbol is ${sym}`
-// TypeError: невозможно конвертировать символ в строку
-</pre>
-``
+    > var sym = Symbol("<3");
+    > "your symbol is " + sym
+    // TypeError: невозможно конвертировать символ в строку
+    > `your symbol is ${sym}`
+    // TypeError: невозможно конвертировать символ в строку
 
 Избежать ошибки поможет явная конвертация символа в строку `String(sym)` или `sym.toString()`.
 
