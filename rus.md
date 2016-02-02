@@ -197,7 +197,7 @@ ES6 символы — это значения, которые не являют
  [2]: http://translate.coupofy.com/es6-in-depth-symbols/
  [3]: http://www.coupofy.com
  [5]: https://en.wikipedia.org/wiki/Symbol_%28programming%29
- [6]: https://hacks.mozilla.org/2015/04/es6-in-depth-iterators-and-the-for-of-loop/
+ [6]: http://frontender.info/es6-in-depth-iterators-and-the-for-of-loop/
  [7]: https://github.com/zloirock/core-js#ecmascript-6-symbols
  [8]: https://github.com/zloirock/core-js#caveats-when-using-symbol-polyfill
  [9]: https://hacks.mozilla.org/author/jorendorffmozillacom/
